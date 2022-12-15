@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "cross-env NODE_ENV=development nodemon ./src/index.ts",
     "std": "ts-node ./src/queryContractStandard.ts",
-    "event": "ts-node ./src/queryEvents.ts"
+    "event": "ts-node ./src/queryEvents.ts",
+    "logs": "ts-node ./src/queryLogs.ts"
   },
   "keywords": [],
   "author": "",

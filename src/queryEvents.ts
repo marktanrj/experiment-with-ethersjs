@@ -9,7 +9,7 @@ async function main() {
   const provider = await alchemy.config.getProvider();
 
   const latestBlockNumber = await provider.getBlockNumber();
-  const fromBlockNumber = latestBlockNumber - 1000;
+  const fromBlockNumber = latestBlockNumber - 10000;
   console.log({ fromBlockNumber, latestBlockNumber })
 
   const contract = new ethers.Contract(DfiAddress, ERC20Abi, provider);
