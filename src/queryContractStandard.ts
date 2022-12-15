@@ -1,7 +1,7 @@
 import { alchemy, ethers } from "./provider/provider";
 
 // Not all tokens support ERC165 interface, so this check would not work for ERC20 tokens
-import ERC721Abi from './abi/ERC721Abi.json';
+import ERC721Abi from './abi/ERC721.json';
 import ERC1155Abi from './abi/ERC1155.json';
 
 const BAYCaddress = '0xBC4CA0EdA7647A8aB7C2061c2E118A18a936f13D'; //ERC721

@@ -1,5 +1,5 @@
 import { alchemy, ethers } from "./provider/provider";
-import ERC20Abi from './abi/ERC20Abi.json';
+import ERC20Abi from './abi/ERC20.json';
 
 const DfiAddress = '0x8fc8f8269ebca376d046ce292dc7eac40c8d358a';
 
