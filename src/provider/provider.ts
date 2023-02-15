@@ -9,7 +9,10 @@ const settings = {
 
 const alchemy = new Alchemy(settings);
 
+const ethersProvider = new ethers.providers.JsonRpcProvider(process.env.ANKR_URL);
+
 export {
   ethers,
-  alchemy
+  alchemy,
+  ethersProvider,
 }
