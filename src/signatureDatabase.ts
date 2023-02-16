@@ -6,9 +6,10 @@ import { UniswapV2ERC20Abi, UniswapV2PairAbi, UniswapV3PoolAbi, WETHAbi } from '
 // db to map signatures to their respective event ABI
 const db: Record<string, any> = {};
 
-function processContractAbiAndStoreSignatures(abi: Array<any>) {
-  const functionAbis = abi.filter(e => e.type === 'event');
+function processContractAbiAndStoreSignatures(contractAbi: Array<any>) {
+  const functionAbis = contractAbi.filter(e => e.type === 'event');
   functionAbis.forEach(e => {
+    // eg. Approval(address,address,uint256)
     const text = e.name + '(' + e.inputs.map((i: { type: any; }) => i.type).join(',') + ')';
     const signature = ethers.utils.id(text);
     if (!db[signature]) {
@@ -32,7 +33,7 @@ async function main() {
   processContractAbiAndStoreSignatures(WETHAbi);
 
   // 2) get signatures from raw logs - topic at index 0 is the signature
-  const txReceipt = await provider.getTransactionReceipt(balTxHashWithUniswapV2);
+  const txReceipt = await provider.getTransactionReceipt(balTxHashWithSushi);
   const logs = txReceipt.logs;
   const signatures = [...new Set(logs.map(log => log.topics[0]))];
 
