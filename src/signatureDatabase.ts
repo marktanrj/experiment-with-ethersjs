@@ -40,8 +40,8 @@ async function main() {
   logs.forEach((log) => {
     try {
       const functionAbi = db[log.topics[0]];
-      const transferInterface = new ethers.utils.Interface([functionAbi]);
-      const parsedLog = transferInterface.parseLog(log);
+      const iface = new ethers.utils.Interface([functionAbi]);
+      const parsedLog = iface.parseLog(log);
       console.log(parsedLog.name)
     } catch (err) {
       console.log('error parsing, or no ABI');
