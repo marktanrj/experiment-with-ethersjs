@@ -1,6 +1,8 @@
 import { alchemy, ethers } from './provider/provider';
 import { UniswapV2ERC20Abi, UniswapV2PairAbi, UniswapV3PoolAbi, WETHAbi } from './abi';
 
+// similar to https://openchain.xyz/signatures
+
 const db: Record<string, any> = {};
 
 function processContractAbiAndStoreSignatures(abi: Array<any>) {
@@ -8,7 +10,9 @@ function processContractAbiAndStoreSignatures(abi: Array<any>) {
   functionAbis.forEach(e => {
     const text = e.name + '(' + e.inputs.map((i: { type: any; }) => i.type).join(',') + ')';
     const signature = ethers.utils.id(text);
-    db[signature] = e;
+    if (!db[signature]) {
+      db[signature] = e;
+    }
   })
 }
 
@@ -32,6 +36,7 @@ async function main() {
   const signatures = [...new Set(logs.map(log => log.topics[0]))];
 
   // 3) build custom ABI from db that match signatures from transaction
+  // to improve performance, on start-up we can store common signatures mapping in memory/variable first, then use db as a fallback
   const customAbi: Array<any> = [];
   signatures.forEach(sig => {
     if (db[sig]) customAbi.push(db[sig]);
