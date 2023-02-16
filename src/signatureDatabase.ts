@@ -32,22 +32,15 @@ async function main() {
   processContractAbiAndStoreSignatures(UniswapV3PoolAbi);
   processContractAbiAndStoreSignatures(WETHAbi);
 
-  // 2) get signatures from raw logs - topic at index 0 is the signature
+  // 2) get raw logs
   const txReceipt = await provider.getTransactionReceipt(balTxHashWithSushi);
   const logs = txReceipt.logs;
-  const signatures = [...new Set(logs.map(log => log.topics[0]))];
 
-  // 3) build custom ABI from db that match signatures from transaction
-  // to improve performance, on start-up we can store common signatures mapping in memory/variable first, then use db as a fallback
-  const customAbi: Array<any> = [];
-  signatures.forEach(sig => {
-    if (db[sig]) customAbi.push(db[sig]);
-  })
-
-  // 4) parse logs with custom ABI
+  // 3) parse logs with custom ABI
   logs.forEach((log) => {
     try {
-      const transferInterface = new ethers.utils.Interface(customAbi);
+      const functionAbi = db[log.topics[0]];
+      const transferInterface = new ethers.utils.Interface([functionAbi]);
       const parsedLog = transferInterface.parseLog(log);
       console.log(parsedLog.name)
     } catch (err) {
