@@ -3,6 +3,7 @@ import { UniswapV2ERC20Abi, UniswapV2PairAbi, UniswapV3PoolAbi, WETHAbi } from '
 
 // similar to https://openchain.xyz/signatures
 
+// db to map signatures to their respective event ABI
 const db: Record<string, any> = {};
 
 function processContractAbiAndStoreSignatures(abi: Array<any>) {
@@ -19,10 +20,10 @@ function processContractAbiAndStoreSignatures(abi: Array<any>) {
 async function main() {
   const provider = await alchemy.config.getProvider();
   
+  // sample transactions
   const balTxHashWithUniswapV2 = '0x1c81c192373e30e277f4826ba45ebf0b45363ba5d4ce26d3545be3eac38d991e'
   const balTxHashWithUniswapV3 = '0x0a547794108bb97490f374d331055989d917d5e28ac20fcd14b7d6dcb5ef893e';
-  // last log no contract
-  const balTxHashWithSushi = '0x733352010ec473dd53e61997debba330488ea7c363cd817cf17da97701fbb400';
+  const balTxHashWithSushi = '0x733352010ec473dd53e61997debba330488ea7c363cd817cf17da97701fbb400'; // last log no contract
 
   // 1) process contract ABIs and store individual functions signatures + ABI in db
   processContractAbiAndStoreSignatures(UniswapV2PairAbi);
