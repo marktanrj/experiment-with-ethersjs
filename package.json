@@ -9,7 +9,8 @@
     "event": "ts-node ./src/queryEvents.ts",
     "logs": "ts-node ./src/queryLogs.ts",
     "abi": "ts-node ./src/getAbi.ts",
-    "sig": "ts-node ./src/signatureDatabase.ts"
+    "sig": "ts-node ./src/signatureDatabase.ts",
+    "value": "ts-node ./src/getValue.ts"
   },
   "keywords": [],
   "author": "",
