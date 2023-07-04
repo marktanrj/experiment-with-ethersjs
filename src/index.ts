@@ -1,22 +1,13 @@
-import { ethers, alchemy } from './provider/provider';
+import { ethers } from './provider/provider';
 
 async function main() {
-  const provider = await alchemy.config.getProvider();
-
-  // get blockchain
+  const provider = new ethers.providers.JsonRpcProvider('http://localhost:8450');
   const blockNumber = await provider.getBlockNumber();
   console.log({ blockNumber })
 
-  // get balance
-  const randomUserAddress = '0x561b56c957799Af32f0449115CFB85Fc6013B15C'
-  const bal = await provider.getBalance(randomUserAddress);
+  const bal = await provider.getBalance('0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045');
   const amt = ethers.utils.formatEther(bal)
   console.log(amt);
-
-  // alchemy specific function, not in ethers
-  // get metadata
-  const metadata = await alchemy.core.getTokenMetadata('0xabe580e7ee158da464b51ee1a83ac0289622e6be');
-  console.log(metadata);
 }
 
 main().catch(console.log);
